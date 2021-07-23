@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+    
+<head>
+    <title>Ruche O-Bee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="w3.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script type="text/javascript" src="script.js"></script>
+</head>
+
+<body class="w3-animate-opacity" onload="onloadAbout()">
+  
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-bar-block w3-animate-left" style="display:none;z-index:5" id="mySidebar">
+        <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close &times;</button>
+        <a href="/" class="w3-bar-item w3-button">Acceuil</a>
+        <a href="http://192.168.0.71:3000/d/o8AqzfzRz/beebox" class="w3-bar-item w3-button">Historique</a>
+        <a href="/wifi.html" class="w3-bar-item w3-button">Configuration WiFi</a>
+        <a href="/balance.html" class="w3-bar-item w3-button">Configuration balance</a>
+        <a href="/about.html" class="w3-bar-item w3-button">A propos de</a>
+    </div>
+    
+    <!-- Overlay -->
+    <div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" id="myOverlay">
+    </div>
+    
+    <!-- Page content -->
+    <div>
+        <!--div class="w3-yellow">
+            <button class="w3-button w3-xxlarge" onclick="w3_open()">&#9776;</button>
+            <h1><b>Ruche O-Bee <span id="deviceName"></span></b></h1>
+            <div class="w3-card w3-padding-small w3-center">
+                <h1><b>Ruche O-Bee <span id="deviceName"></span></b></h1>
+            </div>
+        </div-->
+        <div class="w3-yellow w3-card w3-padding-small">
+            <div class="w3-cell-row">
+                <div class="w3-cell w3-cell-middle" style="width:75px">
+                    <button class="w3-button w3-xxlarge" onclick="w3_open()">&#9776;</button>
+                </div>
+                <div class="w3-cell w3-padding-small w3-center">
+                    <h1><b>Ruche O-Bee <span id="deviceName"></span></b></h1>
+                </div>
+            </div>
+            <h3 class="w3-center w3-xxlarge">A propos...</h3>
+            <br>
+        </div>
+
+        <div class="w3-margin w3-center w3-card w3-padding-24">
+            <h3 class="w3-padding">Nom de l'appareil</h3>
+            <b class="w3-xxlarge"><span id="projectName">-</span></b>
+            <br>
+        </div>
+
+        <div class="w3-margin w3-center w3-card w3-padding-24">
+            <h3 class="w3-padding">Version du firmware</h3>
+            <b class="w3-xxlarge">Version <span id="versionFirmware">-</span></b>
+            <br>
+            <button onclick="updateFirmwareButton()" class="w3-button w3-round-large w3-dark-grey w3-xlarge w3-ripple w3-wide" style="width:30%;">MISE A JOUR DU FIRMWARE</button>
+            <br>
+        </div>
+
+        <div class="w3-padding w3-center">
+            <i><a href="https://O-bee.com" style="text-decoration: none;">Dominique AMPS @2021</a></i>
+        </div>
+    </div>
+
+    <!-- JS to open and close sidebar with overlay effect -->
+    <script>
+        function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("myOverlay").style.display = "block";
+        }
+        
+        function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("myOverlay").style.display = "none";
+        }
+        </script>
+
+</body>
+
+</html>

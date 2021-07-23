@@ -85,6 +85,7 @@ triggers pps 1 sec impulse
 
 // Basic Config
 #include "main.h"
+#include "web_server.h"
 
 // local Tag for logging
 static const char TAG[] = __FILE__;
@@ -524,6 +525,8 @@ void setup() {
   RTC_runmode = RUNMODE_NORMAL;
 
   vTaskDelete(NULL);
+
+  Setup_SPIFFS();
 
 } // setup()
 

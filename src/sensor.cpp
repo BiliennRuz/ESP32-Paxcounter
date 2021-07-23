@@ -1,6 +1,7 @@
 // Basic Config
 #include "globals.h"
 #include "sensor.h"
+#include "loadcell.h"
 
 #if (COUNT_ENS)
 #include "payload.h"
@@ -15,6 +16,10 @@ static const char TAG[] = __FILE__;
   10 // max. size of user sensor data buffer in bytes [default=20]
 
 void sensor_init(void) {
+
+Setup_EEPROM();
+Setup_HX711();
+
 
   // this function is called during device startup
   // put your user sensor initialization routines here

@@ -5,6 +5,7 @@
 #include "cyclic.h"
 #include "qrcode.h"
 #include "power.h"
+#include "loadcell.h"
 
 #if (COUNT_ENS)
 #include "corona.h"

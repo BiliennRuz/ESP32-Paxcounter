@@ -246,9 +246,10 @@ void dp_drawPage(bool nextpage) {
     // page 1: lorawan parameters
     // page 2: GPS
     // page 3: BME280/680
-    // page 4: time
-    // page 5: pax graph
-    // page 6: blank screen
+    // page 4: SENSOR 1
+    // page 5: time
+    // page 6: pax graph
+    // page 7: blank screen
 
     // ---------- page 0: parameters overview ----------
   case 0:
@@ -437,16 +438,39 @@ void dp_drawPage(bool nextpage) {
     DisplayPage++;
 #endif     // HAS_BME
 
-  // ---------- page 4: time ----------
+  // ---------- page 4: SENSOR 1 HX711 ----------
   case 4:
+
+#if (HAS_HX711)
+    dp_setFont(MY_FONT_STRETCHED);
+    dp_setTextCursor(0, 2);
+
+    // line 2-3: Temp
+    dp_printf("MASS:%-2.1f", valueMass);
+    dp_println(2);
+
+    // line 4-5: Hum
+    dp_printf("CAL:%-2.1f", calibrationValue);
+    dp_println(2);
+
+    // line 6-7: Pre
+    dp_printf("TARE:%-2.1f", tareOffsetValue);
+
+    break; // page 4
+#else      // flip page if we are unattended
+    DisplayPage++;
+#endif     // HAS_HX711
+
+  // ---------- page 5: time ----------
+  case 5:
 
     dp_setFont(MY_FONT_LARGE);
     dp_setTextCursor(0, 4);
     dp_printf("%s", myTZ.dateTime("H:i:s").c_str());
     break;
 
-  // ---------- page 5: pax graph ----------
-  case 5:
+  // ---------- page 6: pax graph ----------
+  case 6:
 
     dp_setFont(MY_FONT_NORMAL);
     dp_setTextCursor(0, 0);
@@ -454,8 +478,8 @@ void dp_drawPage(bool nextpage) {
     dp_dump(plotbuf);
     break;
 
-  // ---------- page 6: blank screen ----------
-  case 6:
+  // ---------- page 7: blank screen ----------
+  case 7:
 
 #ifdef HAS_BUTTON
     dp_clear();

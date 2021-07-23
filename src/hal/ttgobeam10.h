@@ -62,6 +62,11 @@ Reset -> reset device
 
 //#define DISABLE_BROWNOUT 1 // comment out if you want to keep brownout feature
 
+// LodCell HX711 settings
+#define HAS_HX711 1 // Enable HX711 sensors in general
+#define HX711_DOUT  (4) 
+#define HX711_SCK  (15) 
+
 #endif
 
 /*

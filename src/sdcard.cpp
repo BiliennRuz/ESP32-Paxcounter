@@ -1,11 +1,11 @@
 // routines for writing data to an SD-card, if present
 
+#if (HAS_SDCARD)
+
 // Local logging tag
 static const char TAG[] = __FILE__;
 
 #include "sdcard.h"
-
-#ifdef HAS_SDCARD
 
 static bool useSDCard;
 

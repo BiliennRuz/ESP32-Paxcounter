@@ -2,7 +2,7 @@
     #define _WEB_SERVER_H
 
 //    #include "Globals.h"    // Global definition
-    #include "loadcell.h"      // LoadCell definition
+    #include "hx711.h"      // LoadCell definition
 //    #include "DHT22.h"      // Environment sensor definition
 //    #include "BATT.h"       // Battery definition
 

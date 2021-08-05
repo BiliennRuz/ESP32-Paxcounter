@@ -12,7 +12,7 @@ Tutorial (in german language): https://www.heise.de/select/make/2019/1/155109923
 <img src="img/TTGO-case.jpg">
 <img src="img/TTGO-curves.jpg">
 <img src="img/Paxcounter-LEDmatrix.jpg">
-<img src="img/Paxcounter-Clock2.png">
+<img src="img/Paxcounter-Clock.png">
 <img src="img/Paxcounter-ttgo-twristband.jpg">
 
 
@@ -194,7 +194,8 @@ Output of sensor and peripheral data is internally switched by a bitmask registe
 | 4   | User sensor 1 | on
 | 5   | User sensor 2 | on
 | 6   | User sensor 3 | on
-| 7   | Batterylevel  | off
+| 7   | Batterylevel  | on
+| 8   | Scale		  | on
 
 *) GPS data can also be combined with paxcounter payload on port 1, *#define GPSPORT 1* in paxcounter.conf to enable
 
@@ -263,22 +264,6 @@ Format of the data is CSV, which can easily imported into LibreOffice, Excel, ..
 
 If you want to change this please look into src/sdcard.cpp and include/sdcard.h.
 
-# Integration into "The Things Stack Community Edition" aka "The Things Stack V3"
-
-To use the ESP32-Paxcounter in The Things Stack Community Edition you need an account to reach the console. Go to:
-- [The Things Stack Community Edition Console](https://console.cloud.thethings.network/)
-- choose your region and go to applications
-- create an application by clicking "**+ Add application**" and give it a id, name, etc.
-- create a device by clicking "**+ Add end device**"
-- Select the end device:  choose the Brand "**Open Source Community Projects**" and the Model "**ESP32-Paxcounter**", leave Hardware Version to "**Unknown**" and select your **Firmware Version** and **Profile (Region)**
-- Enter registration data: choose the **frequency plan** (for EU choose the recommended), set the **AppEUI** (Fill with zeros), set the **DeviceEUI** (generate), set the **AppKey** (generate), choose a **device ID** and hit "Register end device"
-- got to Applications -> "your App ID" -> Payload formatters -> Uplink, choose "**Repository**" and hit "Save changes"
-
-The "Repository" payload decoder uses the packed format, explained below. If you want to use MyDevices from Cayenne you should use the Cayenne payload decoder instead.
-
-# TTN Mapper
-
-If you want your devices to be feeding the [TTN Mapper](https://ttnmapper.org/), just follow this manual: https://docs.ttnmapper.org/integration/tts-integration-v3.html - different than indicated in the manual you can leave the payload decoder to "Repository" for the ESP32-Paxcounter and you are fine.
 
 # Payload format
 
@@ -290,15 +275,11 @@ You can select different payload formats in `paxcounter.conf`:
 
 - [***CayenneLPP***](https://mydevices.com/cayenne/docs/lora/#lora-cayenne-low-power-payload-reference-implementation) generates MyDevices Cayenne readable fields
 
-**Decrepated information from the things network v2 >>**
-
 If you're using [TheThingsNetwork](https://www.thethingsnetwork.org/) (TTN) you may want to use a payload converter. Go to TTN Console - Application - Payload Formats and paste the code example below in tabs Decoder and Converter. This way your MQTT application can parse the fields `pax`, `ble` and `wifi`.
 
 To add your device to myDevices Cayenne platform select "Cayenne-LPP" from Lora device list and use the CayenneLPP payload encoder. 
 
 To track a paxcounter device with on board GPS and at the same time contribute to TTN coverage mapping, you simply activate the [TTNmapper integration](https://www.thethingsnetwork.org/docs/applications/ttnmapper/) in TTN Console. Both formats *plain* and *packed* generate the fields `latitude`, `longitude` and `hdop` required by ttnmapper. Important: set TTN mapper port filter to '4' (paxcounter GPS Port).
-
-**<< Decrepated information from the things network v2**
 
 Hereafter described is the default *plain* format, which uses MSB bit numbering. Under /TTN in this repository you find some ready-to-go decoders which you may copy to your TTN console:
 
@@ -382,6 +363,10 @@ Hereafter described is the default *plain* format, which uses MSB bit numbering.
 **Ports #10, #11, #12:** User sensor data
 
 	Format is specified by user in function `sensor_read(uint8_t sensor)`, see `src/sensor.cpp`. Port #10 is also used for ENS counter (2 bytes = 16 bit), if ENS is compiled AND ENS data transfer is enabled
+
+**Ports #13:** Scale sensor data
+  	bytes 1-4:	mass
+
 
 # Remote control
 

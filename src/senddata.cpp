@@ -156,6 +156,22 @@ void sendData() {
         break;
 #endif
 
+#if (HAS_HX711)
+      case SCALE_DATA:
+        payload.reset();
+        payload.addHX711(hx711_status);
+        SendPayload(SCALEPORT);
+        break;
+#endif
+
+#if (HAS_DHT)
+      case SENSOR2_DATA:
+        payload.reset();
+        payload.addDHT(dht_status);
+        SendPayload(SENSOR2PORT);
+        break;
+#endif
+
 #if (HAS_SENSORS)
 #if (HAS_SENSOR_1)
       case SENSOR1_DATA:

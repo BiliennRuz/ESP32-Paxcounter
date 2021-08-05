@@ -5,6 +5,13 @@
 #include "cyclic.h"
 #include "qrcode.h"
 #include "power.h"
+#if HAS_DHT  // Temperature and humidity
+  #include "dht22.h"
+#endif
+
+#if HAS_HX711 // Load Cell
+  #include "hx711.h"
+#endif
 
 #if (COUNT_ENS)
 #include "corona.h"

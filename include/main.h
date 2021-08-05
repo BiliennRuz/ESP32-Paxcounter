@@ -23,5 +23,7 @@
 #include "libpax_helpers.h"
 #include "power.h"
 #include "antenna.h"
+#include "hx711.h"
+#include "dht22.h"
 
 #endif

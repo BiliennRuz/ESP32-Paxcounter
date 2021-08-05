@@ -27,6 +27,8 @@
 #define SENSOR2_DATA _bit(5)
 #define SENSOR3_DATA _bit(6)
 #define BATT_DATA _bit(7)
+#define SCALE_DATA _bit(8)
+
 
 // length of display buffer for lmic event messages
 #define LMIC_EVENTMSG_LEN 17
@@ -78,6 +80,12 @@ typedef struct __attribute__((packed)) {
   uint8_t
       bsecstate[BSEC_MAX_STATE_BLOB_SIZE + 1]; // BSEC state for BME680 sensor
 #endif
+
+#ifdef HAS_HX711
+  float calFactor;       // calibration factor for HX711 sensor
+  long tareOffset;      // tare forset for HX711 sensor
+#endif
+
 } configData_t;
 
 // Struct holding payload for data send queue
@@ -105,6 +113,18 @@ typedef struct {
   float raw_humidity;    // raw humidity signal
   float gas;             // raw gas sensor signal
 } bmeStatus_t;
+
+typedef struct {
+  float iaq;             // IAQ signal
+  float temperature;     // temperature signal
+  float humidity;        // humidity signal
+} dhtStatus_t;
+
+typedef struct {
+  float mass;               // Curent Mass value in g
+  float tareOffset;         // tare offset value
+  float calibrationFactor;  // calibration factor value
+} hx711Status_t;
 
 typedef struct {
   float pm10;

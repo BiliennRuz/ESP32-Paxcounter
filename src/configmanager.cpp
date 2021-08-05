@@ -9,10 +9,10 @@ static const char TAG[] = __FILE__;
 // default settings for device data to be sent
 #define PAYLOADMASK                                                            \
   ((GPS_DATA | MEMS_DATA | COUNT_DATA | SENSOR1_DATA | SENSOR2_DATA |          \
-    SENSOR3_DATA | BATT_DATA) & (~RESERVED_DATA))
+    SENSOR3_DATA | BATT_DATA | SCALE_DATA) & (~RESERVED_DATA))
 
 // namespace for device runtime preferences
-#define DEVCONFIG "paxcntcfg"
+#define DEVCONFIG "obeecfg"
 
 Preferences nvram;
 
@@ -59,6 +59,12 @@ static void defaultConfig(configData_t *myconfig) {
 #ifdef HAS_BME680
   // initial BSEC state for BME680 sensor
   myconfig->bsecstate[BSEC_MAX_STATE_BLOB_SIZE] = {0};
+#endif
+
+#ifdef HAS_HX711
+  // initial calibration factor and tare offset for loadcell sensor
+  myconfig->calFactor = HX711_CALIB_FACTOR; // calibration factor for HX711 sensor
+  myconfig->tareOffset = HX711_TARE_OFFSET; // tare forset for HX711 sensor
 #endif
 }
 

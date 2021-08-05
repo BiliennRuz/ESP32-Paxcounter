@@ -163,7 +163,9 @@ void PayloadConvert::addCount(uint16_t value, uint8_t snifftype) {
   writeUint16(value);
 }
 
-void PayloadConvert::addVoltage(uint16_t value) { writeUint16(value); }
+void PayloadConvert::addVoltage(uint16_t value) {
+  ESP_LOGD(TAG, "Sending power voltage: %d V", read_voltage());
+  writeUint16(value); }
 
 void PayloadConvert::addConfig(configData_t value) {
   writeUint8(value.loradr);
@@ -216,6 +218,21 @@ void PayloadConvert::addBME(bmeStatus_t value) {
   writePressure(value.pressure);
   writeUFloat(value.humidity);
   writeUFloat(value.iaq);
+#endif
+}
+
+void PayloadConvert::addHX711(hx711Status_t value) {
+#if (HAS_HX711)
+  ESP_LOGD(TAG, "Sending HX711 sensor mass: %.2f g", value.mass);
+  writeUint32(value.mass);
+#endif
+}
+
+void PayloadConvert::addDHT(dhtStatus_t value) {
+#if (HAS_DHT)
+  ESP_LOGD(TAG, "Sending DHT sensor temperature: %.2f °C | Humidity: %.2f %%", value.temperature, value.humidity);
+  writeFloat(value.temperature);
+  writeUFloat(value.humidity);
 #endif
 }
 

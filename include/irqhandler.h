@@ -11,6 +11,8 @@
 #define BME_IRQ _bitl(7)
 #define MATRIX_DISPLAY_IRQ _bitl(8)
 #define PMU_IRQ _bitl(9)
+#define DHT_IRQ _bitl(10)
+#define HX711_IRQ _bitl(11)
 
 #include "globals.h"
 #include "button.h"

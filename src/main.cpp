@@ -457,6 +457,28 @@ void setup() {
   }
 #endif
 
+// initialize Loadcell sensor
+#if (HAS_HX711)
+  strcat_P(features, " HX711");
+  if (hx711_init())
+    ESP_LOGI(TAG, "HX711 sensor initialized");
+  else {
+    ESP_LOGE(TAG, "HX711 sensor could not be initialized");
+    cfg.payloadmask &= ~SCALE_DATA; // switch off transmit of Loadcell data
+  }
+#endif
+
+// initialize DHT sensor
+#if (HAS_DHT)
+  strcat_P(features, " DHT");
+  if (dht_init())
+    ESP_LOGI(TAG, "DHT sensor initialized");
+  else {
+    ESP_LOGE(TAG, "DHT sensor could not be initialized");
+    cfg.payloadmask &= ~SENSOR2_DATA; // switch off transmit of DHT data
+  }
+#endif
+
   // starting timers and interrupts
   _ASSERT(irqHandlerTask != NULL); // has interrupt handler task started?
   ESP_LOGI(TAG, "Starting Timers...");

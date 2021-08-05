@@ -66,8 +66,27 @@ void irqHandler(void *pvParameters) {
 // BME sensor data to be read?
 #if (HAS_BME)
     if (InterruptStatus & BME_IRQ) {
+      ESP_LOGD(TAG, "Debug BME sensor to be read");
       bme_storedata(&bme_status);
       InterruptStatus &= ~BME_IRQ;
+    }
+#endif
+
+// DHT sensor data to be read?
+#if (HAS_DHT)
+    if (InterruptStatus & DHT_IRQ) {
+      ESP_LOGD(TAG, "Debug DHT sensor to be read");
+      dht_storedata(&dht_status);
+      InterruptStatus &= ~DHT_IRQ;
+    }
+#endif
+
+// HX711 sensor data to be read?
+#if (HAS_HX711)
+    if (InterruptStatus & HX711_IRQ) {
+      ESP_LOGD(TAG, "Debug HX711 sensor to be read");
+      hx711_storedata(&hx711_status);
+      InterruptStatus &= ~HX711_IRQ;
     }
 #endif
 

@@ -89,6 +89,15 @@ function Decoder(bytes, port) {
         return decode(bytes, [uint16], ['ens']);
     }
 
+    if (port === 11) {
+        // DHT count      
+        return decode(bytes, [float, ufloat], ['temperature', 'humidity']);
+    }
+
+    if (port === 13) {
+        // Loadcell
+        return decode(bytes, [uint32], ['mass']);
+    }
 }
 
 

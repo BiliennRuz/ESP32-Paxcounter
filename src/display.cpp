@@ -246,9 +246,11 @@ void dp_drawPage(bool nextpage) {
     // page 1: lorawan parameters
     // page 2: GPS
     // page 3: BME280/680
-    // page 4: time
-    // page 5: pax graph
-    // page 6: blank screen
+    // page 4: HX711 Loadcell sensor
+    // page 5: DHT sensor
+    // page 6: time
+    // page 7: pax graph
+    // page 8: blank screen
 
     // ---------- page 0: parameters overview ----------
   case 0:
@@ -437,16 +439,59 @@ void dp_drawPage(bool nextpage) {
     DisplayPage++;
 #endif     // HAS_BME
 
-  // ---------- page 4: time ----------
+  // ---------- page 4: SENSOR 1 HX711 ----------
   case 4:
+
+#if (HAS_HX711)
+    dp_setFont(MY_FONT_STRETCHED);
+    dp_setTextCursor(0, 2);
+
+    // line 2-3: Mass
+    dp_printf("MASS:%-2.1f", hx711_status.mass);
+    dp_println(2);
+
+    // line 4-5: Cal
+    dp_printf("CAL:%-2.1f", hx711_status.calibrationFactor);
+    dp_println(2);
+
+    // line 6-7: Tare
+    dp_printf("TARE:%-2.1f", hx711_status.tareOffset);
+
+    break; // page 4
+#else      // flip page if we are unattended
+    DisplayPage++;
+#endif     // HAS_HX711
+
+  // ---------- page 5: SENSOR 2 DHT22 ----------
+  case 5:
+
+#if (HAS_DHT)
+
+    dp_setFont(MY_FONT_STRETCHED);
+    dp_setTextCursor(0, 2);
+    // line 2-3: Temp
+    dp_printf("TEMP:%-2.1f", dht22.readTemperature());
+    dp_println(2);
+
+    // line 4-5: Hum
+    dp_printf("HUM:%-2.1f", dht22.readHumidity());
+    dp_println(2);
+
+    break; // page 5
+#else      // flip page if we are unattended
+    DisplayPage++;
+#endif     // HAS_DHT
+
+  // ---------- page 6: time ----------
+  case 6:
 
     dp_setFont(MY_FONT_LARGE);
     dp_setTextCursor(0, 4);
     dp_printf("%s", myTZ.dateTime("H:i:s").c_str());
     break;
 
-  // ---------- page 5: pax graph ----------
-  case 5:
+  // ---------- page 7: pax graph ----------
+  case 7:
 
     dp_setFont(MY_FONT_NORMAL);
     dp_setTextCursor(0, 0);
@@ -454,8 +499,8 @@ void dp_drawPage(bool nextpage) {
     dp_dump(plotbuf);
     break;
 
-  // ---------- page 6: blank screen ----------
-  case 6:
+  // ---------- page 8: blank screen ----------
+  case 8:
 
 #ifdef HAS_BUTTON
     dp_clear();
